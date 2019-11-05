@@ -3,6 +3,7 @@ package com.tyss.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceUnit;
@@ -10,8 +11,6 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import com.tyss.dto.Admin;
-import com.tyss.dto.Book;
 import com.tyss.dto.User;
 
 @Repository
@@ -20,7 +19,7 @@ public class UserDaoImpl implements UserDao {
 	private EntityManagerFactory factory;
 
 	@Override
-	public boolean userRegister(User user) {
+	public boolean register(User user) {
 		EntityManager manager = factory.createEntityManager();
 		EntityTransaction transaction = manager.getTransaction();
 		try {
@@ -36,45 +35,63 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User userLogin(String uEmail, String uPassword) {
+	public User login(String email, String password) {
 		EntityManager manager = factory.createEntityManager();
 		EntityTransaction transaction = manager.getTransaction();
-		String login = "from User where uEmail=:uEmail and uPassword=:uPassword";
+		String login = "from User where email=:email and password=:password";
 
 		Query query = manager.createQuery(login);
-		query.setParameter("uEmail", uEmail);
-		query.setParameter("uPassword", uPassword);
+		query.setParameter("email", email);
+		query.setParameter("password", password);
 		User user = (User) query.getSingleResult();
-
 		if (user == null)
 			return null;
 		return user;
 	}
 
 	@Override
+	public boolean changePassword(String email, String password) {
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		String login = "from User where email=:email";
+
+		Query query = manager.createQuery(login);
+		query.setParameter("email", email);
+
+		User user = (User) query.getSingleResult();
+		if (user != null) {
+			transaction.begin();
+			user.setPassword(password);
+			System.out.println(user.getPassword());
+			transaction.commit();
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public boolean userUpdate(User user) {
 		EntityManager manager = factory.createEntityManager();
 		EntityTransaction transaction = manager.getTransaction();
-		User user2 = manager.find(User.class, user.getuId());
-		if (user2 == null) {
+		User user1 = manager.find(User.class, user.getId());
+		if (user1 == null) {
 			return false;
 		}
 		transaction.begin();
-		user2.setuAge(user.getuAge());
-		user2.setuEmail(user.getuEmail());
-		user2.setuGender(user.getuGender());
-		user2.setuMobileNo(user.getuMobileNo());
-		user2.setuName(user2.getuName());
-		user2.setuPassword(user.getuPassword());
+		user1.setEmail(user.getEmail());
+		user1.setName(user.getName());
+		user1.setPassword(user.getPassword());
+		user1.setPhno(user.getPhno());
+		user1.setRole(user.getRole());
 		transaction.commit();
 		return true;
 	}
 
 	@Override
-	public boolean userDelete(int uId) {
+	public boolean userDelete(int id) {
 		EntityManager manager = factory.createEntityManager();
 		EntityTransaction transaction = manager.getTransaction();
-		User user2 = manager.find(User.class, uId);
+		User user2 = manager.find(User.class, id);
 		if (user2 == null) {
 			return false;
 		}
@@ -82,7 +99,6 @@ public class UserDaoImpl implements UserDao {
 		manager.remove(user2);
 		transaction.commit();
 		return true;
-
 	}
 
 	@Override
@@ -97,26 +113,4 @@ public class UserDaoImpl implements UserDao {
 		}
 		return list;
 	}
-
-	@Override
-	public boolean changePassword(String uEmail, String uPassword) {
-		EntityManager manager = factory.createEntityManager();
-		EntityTransaction transaction = manager.getTransaction();
-		String login = "from User where uEmail=:uEmail ";
-
-		Query query = manager.createQuery(login);
-		query.setParameter("uEmail", uEmail);
-
-		User user = (User) query.getSingleResult();
-
-		if (user != null) {
-			transaction.begin();
-			user.setuPassword(uPassword);
-			transaction.commit();
-			System.out.println("user password changed");
-			return true;
-		}
-		return false;
-	}
-
 }

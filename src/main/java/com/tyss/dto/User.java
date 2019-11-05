@@ -11,62 +11,53 @@ import javax.persistence.Table;
 public class User {
 	@Id
 	@GeneratedValue
+	@Column 
+	private int id;
 	@Column
-	private int uId;
+	private String name;
 	@Column
-	private String uName;
+	private String email;
 	@Column
-	private String uEmail;
+	private long phno;
 	@Column
-	private String uPassword;
+	private String password;
 	@Column
-	private int uAge;
-	@Column
-	private long uMobileNo;
-	@Column
-	private String uGender;
-	public int getuId() {
-		return uId;
+	private String role;
+	public int getId() {
+		return id;
 	}
-	public void setuId(int uId) {
-		this.uId = uId;
+	public void setId(int id) {
+		this.id = id;
 	}
-	public String getuName() {
-		return uName;
+	public String getName() {
+		return name;
 	}
-	public void setuName(String uName) {
-		this.uName = uName;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getuEmail() {
-		return uEmail;
+	public String getEmail() {
+		return email;
 	}
-	public void setuEmail(String uEmail) {
-		this.uEmail = uEmail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public String getuPassword() {
-		return uPassword;
+	public long getPhno() {
+		return phno;
 	}
-	public void setuPassword(String uPassword) {
-		this.uPassword = uPassword;
+	public void setPhno(long phno) {
+		this.phno = phno;
 	}
-	public int getuAge() {
-		return uAge;
+	public String getPassword() {
+		return password;
 	}
-	public void setuAge(int uAge) {
-		this.uAge = uAge;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	public long getuMobileNo() {
-		return uMobileNo;
+	public String getRole() {
+		return role;
 	}
-	public void setuMobileNo(long uMobileNo) {
-		this.uMobileNo = uMobileNo;
+	public void setRole(String role) {
+		this.role = role;
 	}
-	public String getuGender() {
-		return uGender;
-	}
-	public void setuGender(String uGender) {
-		this.uGender = uGender;
-	}
-	
 	
 }

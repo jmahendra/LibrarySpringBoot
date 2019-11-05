@@ -1,13 +1,11 @@
 package com.tyss.controller;
 
-import java.util.Arrays;
-
 import java.util.List;
 
+import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,30 +21,62 @@ import com.tyss.dto.User;
 import com.tyss.services.UserService;
 
 @RestController
-@CrossOrigin(origins="*",allowedHeaders="*",allowCredentials="true")
+@CrossOrigin(origins = "*", allowedHeaders = "*", allowCredentials = "true")
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
 	private UserService service;
 
 	@PostMapping(path = "/user", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public LibraryResponse userRegister(@RequestBody User user) {
+	public LibraryResponse registerUser(@RequestBody User user) {
+		System.out.println(user.getRole());
 		LibraryResponse response = new LibraryResponse();
-		if (service.userRegister(user)) {
+		if (service.register(user)) {
 			response.setStatusCode(201);
 			response.setMessage("success");
 			response.setDescription("data  successfully stored..");
+			return response;
 		} else {
 			response.setStatusCode(400);
 			response.setMessage("failure");
 			response.setDescription("data not successfully stored..");
+			return response;
 		}
-		return response;
 	}
 
 	@PostMapping(path = "/user/{email}/{password}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public User Login(@PathVariable("email") String uEmail, @PathVariable("password") String uPassword) {
-		return service.userLogin(uEmail, uPassword);
+	public LibraryResponse login(@PathVariable("email") String email, @PathVariable("password") String password) {
+		LibraryResponse response = new LibraryResponse();
+		User user = service.login(email, password);
+		if (user != null) {
+			response.setStatusCode(201);
+			response.setMessage("success");
+			response.setDescription("login  successfully ..");
+			response.setUser1(user);
+			return response;
+		} else {
+			response.setStatusCode(400);
+			response.setMessage("failure");
+			response.setDescription("login not successfully ..");
+			return response;
+		}
+	}
+
+	@PutMapping(path = "/user/{email}/{password}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public LibraryResponse changePassword(@PathVariable("email") String email,
+			@PathVariable("password") String password) {
+		LibraryResponse response = new LibraryResponse();
+		if (service.changePassword(email, password)) {
+			response.setStatusCode(201);
+			response.setMessage("success");
+			response.setDescription("password changed  successfully ..");
+			return response;
+		} else {
+			response.setStatusCode(400);
+			response.setMessage("failure");
+			response.setDescription("password changed not successfully ..");
+			return response;
+		}
 	}
 
 	@PutMapping(path = "/user", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -94,10 +124,5 @@ public class UserController {
 			response.setUser(list);
 		}
 		return response;
-	}
-	@PutMapping(path="/user/{email}/{password}",produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE)
-	public boolean changePassword(@PathVariable("email")String uEmail, @PathVariable("password")String uPassword) {
-		
-		return service.changePassword(uEmail, uPassword);
 	}
 }

@@ -22,9 +22,9 @@ public class RootController {
 	@PostMapping(path = "/send", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void sendMail(@RequestBody User user) throws MessagingException {
 
-		sender.send(user.getuEmail(), "mail via java mail",
-				" Email -->" + user.getuEmail() + "  Password-->" + user.getuPassword());
+		sender.send(user.getEmail(), "mail via java mail",
+				" Email -->" + user.getEmail() + "  Password-->" + user.getPassword());
 		System.out.println("mail sent");
-		System.out.println(" Email -->" + user.getuEmail() + "  Password-->" + user.getuPassword());
+		System.out.println(" Email -->" + user.getEmail() + "  Password-->" + user.getPassword());
 	}
 }

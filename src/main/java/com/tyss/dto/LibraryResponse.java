@@ -6,6 +6,7 @@ public class LibraryResponse {
 	private int statusCode;
 	private String message;
 	private String description;
+	private User user1;
 	private List<User> user;
 	private List<Book> book;
 
@@ -47,6 +48,14 @@ public class LibraryResponse {
 
 	public void setBook(List<Book> book) {
 		this.book = book;
+	}
+
+	public User getUser1() {
+		return user1;
+	}
+
+	public void setUser1(User user1) {
+		this.user1 = user1;
 	}
 	
 }

@@ -2,8 +2,8 @@ package com.tyss.services;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.tyss.dao.UserDao;
@@ -15,15 +15,21 @@ public class UserServiceImpl implements UserService {
 	private UserDao dao;
 
 	@Override
-	public boolean userRegister(User user) {
+	public boolean register(User user) {
 		// TODO Auto-generated method stub
-		return dao.userRegister(user);
+		return dao.register(user);
 	}
 
 	@Override
-	public User userLogin(String uEmail, String uPassword) {
+	public User login(String email, String password) {
 		// TODO Auto-generated method stub
-		return dao.userLogin(uEmail, uPassword);
+		return dao.login(email, password);
+	}
+
+	@Override
+	public boolean changePassword(String email, String password) {
+		// TODO Auto-generated method stub
+		return dao.changePassword(email, password);
 	}
 
 	@Override
@@ -33,21 +39,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean userDelete(int uId) {
+	public boolean userDelete(int Id) {
 		// TODO Auto-generated method stub
-		return dao.userDelete(uId);
+		return dao.userDelete(Id);
 	}
 
 	@Override
 	public List<User> userGet() {
 		// TODO Auto-generated method stub
 		return dao.userGet();
-	}
-
-	@Override
-	public boolean changePassword(String uEmail, String uPassword) {
-		// TODO Auto-generated method stub
-		return dao.changePassword(uEmail, uPassword);
 	}
 
 }

@@ -2,7 +2,6 @@ package com.tyss.dao;
 
 import java.util.List;
 
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -55,8 +54,8 @@ public class AllocateBookDaoImpl implements AllocateBookDao {
 	public boolean removeBook(int bId) {
 		EntityManager manager = factory.createEntityManager();
 		EntityTransaction transaction = manager.getTransaction();
-		AllocateBook book=manager.find(AllocateBook.class,bId);
-		if(book==null) {
+		AllocateBook book = manager.find(AllocateBook.class, bId);
+		if (book == null) {
 			return false;
 		}
 		transaction.begin();
