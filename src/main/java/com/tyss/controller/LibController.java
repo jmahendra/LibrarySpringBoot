@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,5 +30,11 @@ public class LibController {
 	@PostMapping(path = "/lib/{email}/{password}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public boolean login(@PathVariable("email") String lEmail, @PathVariable("password") String lPassword) {
 		return service.login(lEmail, lPassword);
+	}
+
+	@PutMapping(path = "/lib/{email}/{password}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public boolean changePassword(@PathVariable("email") String lEmail, @PathVariable("password") String lPassword) {
+
+		return service.changePassword(lEmail, lPassword);
 	}
 }

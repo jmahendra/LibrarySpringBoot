@@ -37,7 +37,7 @@ public class AdminDaoImpl implements AdminDao {
 		EntityManager manager = factory.createEntityManager();
 		EntityTransaction transaction = manager.getTransaction();
 		String login = "from Admin where email=:email and password=:password";
-		
+
 		Query query = manager.createQuery(login);
 		query.setParameter("email", email);
 		query.setParameter("password", password);
@@ -47,4 +47,38 @@ public class AdminDaoImpl implements AdminDao {
 		return true;
 	}
 
+	@Override
+	public Admin login() {
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		String login = "from Admin";
+
+		Query query = manager.createQuery(login);
+
+		Admin admin = (Admin) query.getSingleResult();
+		if (admin == null)
+			return null;
+		return admin;
+
+	}
+
+	@Override
+	public boolean changePassword(String email, String password) {
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		String login = "from Admin where email=:email";
+
+		Query query = manager.createQuery(login);
+		query.setParameter("email", email);
+
+		Admin admin = (Admin) query.getSingleResult();
+		if (admin != null) {
+			transaction.begin();
+			admin.setPassword(password);
+			System.out.println(admin.getPassword());
+			transaction.commit();
+			return true;
+		}
+		return false;
+	}
 }

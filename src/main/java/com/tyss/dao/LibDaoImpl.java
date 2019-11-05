@@ -48,4 +48,24 @@ public class LibDaoImpl implements LibDao {
 		return true;
 	}
 
+	@Override
+	public boolean changePassword(String lEmail, String lPassword) {
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		String login = "from Librarian where lEmail=:lEmail ";
+
+		Query query = manager.createQuery(login);
+		query.setParameter("lEmail", lEmail);
+
+		Librarian librarian = (Librarian) query.getSingleResult();
+		if (librarian != null) {
+			transaction.begin();
+			librarian.setlPassword(lPassword);
+			transaction.commit();
+			System.out.println("lib password changed..");
+			return true;
+		}
+		return false;
+	}
+
 }

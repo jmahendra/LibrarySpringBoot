@@ -45,7 +45,7 @@ public class UserDaoImpl implements UserDao {
 		query.setParameter("uEmail", uEmail);
 		query.setParameter("uPassword", uPassword);
 		User user = (User) query.getSingleResult();
-		
+
 		if (user == null)
 			return null;
 		return user;
@@ -96,6 +96,27 @@ public class UserDaoImpl implements UserDao {
 			return null;
 		}
 		return list;
+	}
+
+	@Override
+	public boolean changePassword(String uEmail, String uPassword) {
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		String login = "from User where uEmail=:uEmail ";
+
+		Query query = manager.createQuery(login);
+		query.setParameter("uEmail", uEmail);
+
+		User user = (User) query.getSingleResult();
+
+		if (user != null) {
+			transaction.begin();
+			user.setuPassword(uPassword);
+			transaction.commit();
+			System.out.println("user password changed");
+			return true;
+		}
+		return false;
 	}
 
 }

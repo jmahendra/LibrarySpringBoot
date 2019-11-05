@@ -15,4 +15,6 @@ public interface UserService {
 	public boolean userDelete(int uId);
 
 	public List<User> userGet();
+	
+	public boolean changePassword(String uEmail, String uPassword);
 }

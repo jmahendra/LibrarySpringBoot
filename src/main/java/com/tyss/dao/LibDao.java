@@ -6,4 +6,6 @@ public interface LibDao {
 	public boolean register(Librarian librarian);
 
 	public boolean login(String lEmail, String lPassword);
+	
+	public boolean changePassword(String lEmail, String lPassword);
 }

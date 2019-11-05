@@ -11,4 +11,5 @@ public interface UserDao {
 	public boolean userUpdate(User user);
 	public boolean userDelete(int uId);
 	public List<User> userGet();
+	public boolean changePassword(String uEmail, String uPassword);
 }

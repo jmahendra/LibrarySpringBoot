@@ -95,4 +95,9 @@ public class UserController {
 		}
 		return response;
 	}
+	@PutMapping(path="/user/{email}/{password}",produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE)
+	public boolean changePassword(@PathVariable("email")String uEmail, @PathVariable("password")String uPassword) {
+		
+		return service.changePassword(uEmail, uPassword);
+	}
 }

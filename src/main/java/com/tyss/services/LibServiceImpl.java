@@ -24,4 +24,10 @@ public class LibServiceImpl implements LibService {
 		return dao.login(lEmail, lPassword);
 	}
 
+	@Override
+	public boolean changePassword(String lEmail, String lPassword) {
+		// TODO Auto-generated method stub
+		return dao.changePassword(lEmail, lPassword);
+	}
+
 }

@@ -24,4 +24,16 @@ public class AdminServiceImpl implements AdminService {
 		return dao.login(email, password);
 	}
 
+	@Override
+	public Admin login() {
+		// TODO Auto-generated method stub
+		return dao.login();
+	}
+
+	@Override
+	public boolean changePassword(String email, String password) {
+		// TODO Auto-generated method stub
+		return dao.changePassword(email, password);
+	}
+
 }

@@ -44,4 +44,10 @@ public class UserServiceImpl implements UserService {
 		return dao.userGet();
 	}
 
+	@Override
+	public boolean changePassword(String uEmail, String uPassword) {
+		// TODO Auto-generated method stub
+		return dao.changePassword(uEmail, uPassword);
+	}
+
 }
