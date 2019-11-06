@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tyss.controller.UserController;
 import com.tyss.dto.User;
 
 @RestController
@@ -21,7 +22,6 @@ public class RootController {
 
 	@PostMapping(path = "/send", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void sendMail(@RequestBody User user) throws MessagingException {
-
 		sender.send(user.getEmail(), "mail via java mail",
 				" Email -->" + user.getEmail() + "  Password-->" + user.getPassword());
 		System.out.println("mail sent");

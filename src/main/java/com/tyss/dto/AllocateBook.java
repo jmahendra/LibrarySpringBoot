@@ -17,7 +17,7 @@ public class AllocateBook {
 	@Column
 	private int bId;
 	@Column
-	private int uId;
+	private int id;
 	@Column
 	private String bName;
 	@Column
@@ -67,13 +67,12 @@ public class AllocateBook {
 		this.date = date;
 	}
 
-	public int getuId() {
-		return uId;
+	public int getId() {
+		return id;
 	}
 
-	public void setuId(int uId) {
-		this.uId = uId;
+	public void setId(int id) {
+		this.id = id;
 	}
-
 
 }

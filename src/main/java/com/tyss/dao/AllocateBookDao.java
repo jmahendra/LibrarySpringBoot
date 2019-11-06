@@ -8,6 +8,6 @@ import com.tyss.dto.BookAction;
 
 public interface AllocateBookDao {
 	public boolean allocateBook(AllocateBook book);	
-	public List<AllocateBook> getAllBook(int uId);
+	public List<AllocateBook> getAllBook(int id);
 	public boolean removeBook(int bId);
 }

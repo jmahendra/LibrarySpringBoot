@@ -36,13 +36,13 @@ public class AllocateBookDaoImpl implements AllocateBookDao {
 	}
 
 	@Override
-	public List<AllocateBook> getAllBook(int uId) {
+	public List<AllocateBook> getAllBook(int id) {
 		EntityManager manager = factory.createEntityManager();
 		EntityTransaction transaction = manager.getTransaction();
 
-		String get = "from AllocateBook where uId=:uId";
+		String get = "from AllocateBook where id=:id";
 		Query query = manager.createQuery(get);
-		query.setParameter("uId", uId);
+		query.setParameter("id", id);
 		List<AllocateBook> list = query.getResultList();
 		if (list == null) {
 			return null;

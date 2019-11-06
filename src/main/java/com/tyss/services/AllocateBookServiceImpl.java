@@ -21,9 +21,9 @@ public class AllocateBookServiceImpl implements AllocateBookService{
 	}
 
 	@Override
-	public List<AllocateBook> getAllBook(int uId) {
+	public List<AllocateBook> getAllBook(int id) {
 		// TODO Auto-generated method stub
-		return dao.getAllBook(uId);
+		return dao.getAllBook(id);
 	}
 
 	@Override

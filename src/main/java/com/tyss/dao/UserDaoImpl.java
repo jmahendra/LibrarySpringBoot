@@ -19,19 +19,25 @@ public class UserDaoImpl implements UserDao {
 	private EntityManagerFactory factory;
 
 	@Override
-	public boolean register(User user) {
+	public User register(User user) {
 		EntityManager manager = factory.createEntityManager();
 		EntityTransaction transaction = manager.getTransaction();
+		
 		try {
 			transaction.begin();
 			manager.persist(user);
 			transaction.commit();
-			return true;
+			
 		} catch (Exception e) {
 			transaction.rollback();
 			e.printStackTrace();
-			return false;
+			
 		}
+		User u=manager.find(User.class, user.getId());
+		if(u==null) {
+			return null;
+		}
+		return u;
 	}
 
 	@Override

@@ -5,7 +5,7 @@ import java.util.List;
 import com.tyss.dto.User;
 
 public interface UserDao {
-	public boolean register(User user);
+	public User register(User user);
 
 	public User login(String email, String password);
 

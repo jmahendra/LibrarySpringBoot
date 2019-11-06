@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 	private UserDao dao;
 
 	@Override
-	public boolean register(User user) {
+	public User register(User user) {
 		// TODO Auto-generated method stub
 		return dao.register(user);
 	}

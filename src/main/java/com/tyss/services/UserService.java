@@ -2,11 +2,10 @@ package com.tyss.services;
 
 import java.util.List;
 
-import com.tyss.dto.Book;
 import com.tyss.dto.User;
 
 public interface UserService {
-	public boolean register(User user);
+	public User register(User user);
 
 	public User login(String email, String password);
 

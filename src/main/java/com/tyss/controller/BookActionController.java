@@ -26,10 +26,10 @@ public class BookActionController {
 	@Autowired
 	private BookActionService service;
 
-	@PostMapping(path = "/bookaction/{uId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public LibraryResponse addBook(@RequestBody BookAction bookAction,@PathVariable("uId") int uId) {
+	@PostMapping(path = "/bookaction/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public LibraryResponse addBook(@RequestBody BookAction bookAction,@PathVariable("id") int id) {
 		LibraryResponse response = new LibraryResponse();
-		bookAction.setuId(uId);
+		bookAction.setId(id);
 		if (service.addBook(bookAction)) {
 			response.setStatusCode(201);
 			response.setMessage("success");

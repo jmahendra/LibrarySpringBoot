@@ -2,6 +2,8 @@ package com.tyss.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.tyss.dto.LibraryResponse;
 import com.tyss.dto.User;
@@ -26,15 +29,26 @@ import com.tyss.services.UserService;
 public class UserController {
 	@Autowired
 	private UserService service;
+	
 
 	@PostMapping(path = "/user", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public LibraryResponse registerUser(@RequestBody User user) {
 		System.out.println(user.getRole());
+		// Length of your password as I have choose
+		// here to be 8
+		int length = 10;
+		//System.out.println(AutoGeneratePassword.geek_Password(length));
+
+		char[] ch = AutoGeneratePassword.geek_Password(length);
+		String p = new String(ch);
+		user.setPassword(p);
 		LibraryResponse response = new LibraryResponse();
-		if (service.register(user)) {
+		User u1 = service.register(user);
+		if (u1 != null) {
 			response.setStatusCode(201);
 			response.setMessage("success");
 			response.setDescription("data  successfully stored..");
+			response.setUser1(u1);
 			return response;
 		} else {
 			response.setStatusCode(400);
@@ -45,10 +59,12 @@ public class UserController {
 	}
 
 	@PostMapping(path = "/user/{email}/{password}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public LibraryResponse login(@PathVariable("email") String email, @PathVariable("password") String password) {
+	public LibraryResponse login(HttpSession session, @PathVariable("email") String email,
+			@PathVariable("password") String password) {
 		LibraryResponse response = new LibraryResponse();
 		User user = service.login(email, password);
 		if (user != null) {
+			session.setAttribute("user", user);
 			response.setStatusCode(201);
 			response.setMessage("success");
 			response.setDescription("login  successfully ..");
