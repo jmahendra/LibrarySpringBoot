@@ -50,4 +50,10 @@ public class UserServiceImpl implements UserService {
 		return dao.userGet();
 	}
 
+	@Override
+	public List<User> searchUser(String name) {
+		
+		return dao.searchUser(name);
+	}
+
 }

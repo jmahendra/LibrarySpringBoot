@@ -11,6 +11,7 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
+import com.tyss.dto.Book;
 import com.tyss.dto.User;
 
 @Repository
@@ -22,19 +23,19 @@ public class UserDaoImpl implements UserDao {
 	public User register(User user) {
 		EntityManager manager = factory.createEntityManager();
 		EntityTransaction transaction = manager.getTransaction();
-		
+
 		try {
 			transaction.begin();
 			manager.persist(user);
 			transaction.commit();
-			
+
 		} catch (Exception e) {
 			transaction.rollback();
 			e.printStackTrace();
-			
+
 		}
-		User u=manager.find(User.class, user.getId());
-		if(u==null) {
+		User u = manager.find(User.class, user.getId());
+		if (u == null) {
 			return null;
 		}
 		return u;
@@ -86,7 +87,6 @@ public class UserDaoImpl implements UserDao {
 		transaction.begin();
 		user1.setEmail(user.getEmail());
 		user1.setName(user.getName());
-		user1.setPassword(user.getPassword());
 		user1.setPhno(user.getPhno());
 		user1.setRole(user.getRole());
 		transaction.commit();
@@ -113,6 +113,20 @@ public class UserDaoImpl implements UserDao {
 		EntityTransaction transaction = manager.getTransaction();
 		String get = "from User";
 		Query query = manager.createQuery(get);
+		List<User> list = query.getResultList();
+		if (list == null) {
+			return null;
+		}
+		return list;
+	}
+
+	@Override
+	public List<User> searchUser(String name) {
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		String get = "from User where name like :name";
+		Query query = manager.createQuery(get);
+		query.setParameter("name", "%" + name + "%");
 		List<User> list = query.getResultList();
 		if (list == null) {
 			return null;

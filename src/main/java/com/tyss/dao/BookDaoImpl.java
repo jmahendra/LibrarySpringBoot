@@ -70,9 +70,9 @@ public class BookDaoImpl implements BookDao {
 	public List<Book> searchBook(String bName) {
 		EntityManager manager = factory.createEntityManager();
 		EntityTransaction transaction = manager.getTransaction();
-		String get="from Book where bName=:bName";
+		String get="from Book where bName like :bName";
 		Query query=manager.createQuery(get);
-		query.setParameter("bName", bName);
+		query.setParameter("bName", "%"+bName+"%");
 		List<Book> list=query.getResultList();
 		if(list==null) {
 			return null;

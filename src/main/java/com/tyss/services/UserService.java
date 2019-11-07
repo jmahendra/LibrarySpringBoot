@@ -16,4 +16,6 @@ public interface UserService {
 	public boolean userDelete(int Id);
 
 	public List<User> userGet();
+	
+	public List<User> searchUser(String name);
 }

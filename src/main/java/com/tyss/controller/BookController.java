@@ -88,7 +88,6 @@ public class BookController {
 	public LibraryResponse searchBook1(@PathVariable("bName") String bName) {
 		LibraryResponse response = new LibraryResponse();
 		List<Book> list = service.searchBook(bName);
-		System.out.println(list.get(0).getbAuthor());
 		if (list == null) {
 			response.setStatusCode(400);
 			response.setMessage("failure");

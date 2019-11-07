@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.tyss.dto.Book;
 import com.tyss.dto.LibraryResponse;
 import com.tyss.dto.User;
 import com.tyss.services.UserService;
@@ -29,7 +30,6 @@ import com.tyss.services.UserService;
 public class UserController {
 	@Autowired
 	private UserService service;
-	
 
 	@PostMapping(path = "/user", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public LibraryResponse registerUser(@RequestBody User user) {
@@ -37,7 +37,7 @@ public class UserController {
 		// Length of your password as I have choose
 		// here to be 8
 		int length = 10;
-		//System.out.println(AutoGeneratePassword.geek_Password(length));
+		// System.out.println(AutoGeneratePassword.geek_Password(length));
 
 		char[] ch = AutoGeneratePassword.geek_Password(length);
 		String p = new String(ch);
@@ -137,6 +137,23 @@ public class UserController {
 			response.setStatusCode(201);
 			response.setMessage("success");
 			response.setDescription("data  successfully stored..");
+			response.setUser(list);
+		}
+		return response;
+	}
+
+	@GetMapping(path = "/user/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public LibraryResponse searchBook1(@PathVariable("name") String name) {
+		LibraryResponse response = new LibraryResponse();
+		List<User> list = service.searchUser(name);
+		if (list == null) {
+			response.setStatusCode(400);
+			response.setMessage("failure");
+			response.setDescription("data not successfully access..");
+		} else {
+			response.setStatusCode(201);
+			response.setMessage("success");
+			response.setDescription("data  successfully accessed..");
 			response.setUser(list);
 		}
 		return response;
